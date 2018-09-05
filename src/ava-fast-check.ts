@@ -1,4 +1,4 @@
-import test from 'ava';
+import test, { GenericTest, Context } from 'ava';
 import * as fc from 'fast-check';
 
 // Pre-requisite: https://github.com/Microsoft/TypeScript/pull/26063
@@ -12,11 +12,30 @@ function wrapProp<Ts extends any[]>(prop: Prop<Ts>): PromiseProp<Ts> {
   return (...args: Ts) => Promise.resolve(prop(...args));
 }
 
-function testProp<Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void {
+function internalTestProp<Ts extends any[]>(
+  testFn: (label: string, exec: GenericTest<Context<any>>) => void,
+  label: string,
+  arbitraries: ArbitraryTuple<Ts>,
+  prop: Prop<Ts>
+): void {
   const promiseProp = wrapProp(prop);
-  test(label, async t => {
-    t.notThrows(fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp)));
+  testFn(label, async t => {
+    await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp));
+    t.pass();
   });
 }
 
-export default testProp;
+export function testProp<Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void {
+  internalTestProp(test, label, arbitraries, prop);
+}
+
+export namespace testProp {
+  export const only = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
+    internalTestProp(test.only, label, arbitraries, prop);
+  export const failing = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
+    internalTestProp(test.failing, label, arbitraries, prop);
+  export const skip = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
+    internalTestProp(test.skip, label, arbitraries, prop);
+}
+
+export { test, fc };
