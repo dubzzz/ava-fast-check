@@ -19,6 +19,7 @@ testProp('should fail on falsy asynchronous property', [fc.nat()], async a => {
   await delay(0);
   return typeof a === 'string';
 });
+testProp('should fail with seed=4242 and path="25"', [fc.constant(null)], () => false, { seed: 4242, path: "25" });
 
 // testProp.failing
 

@@ -16,26 +16,44 @@ function internalTestProp<Ts extends any[]>(
   testFn: (label: string, exec: GenericTest<Context<any>>) => void,
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
-  prop: Prop<Ts>
+  prop: Prop<Ts>,
+  params?: fc.Parameters<Ts>
 ): void {
   const promiseProp = wrapProp(prop);
   testFn(label, async t => {
-    await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp));
+    await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp), params);
     t.pass();
   });
 }
 
-export function testProp<Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void {
-  internalTestProp(test, label, arbitraries, prop);
+export function testProp<Ts extends any[]>(
+  label: string,
+  arbitraries: ArbitraryTuple<Ts>,
+  prop: Prop<Ts>,
+  params?: fc.Parameters<Ts>
+): void {
+  internalTestProp(test, label, arbitraries, prop, params);
 }
 
 export namespace testProp {
-  export const only = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
-    internalTestProp(test.only, label, arbitraries, prop);
-  export const failing = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
-    internalTestProp(test.failing, label, arbitraries, prop);
-  export const skip = <Ts extends any[]>(label: string, arbitraries: ArbitraryTuple<Ts>, prop: Prop<Ts>): void =>
-    internalTestProp(test.skip, label, arbitraries, prop);
+  export const only = <Ts extends any[]>(
+    label: string,
+    arbitraries: ArbitraryTuple<Ts>,
+    prop: Prop<Ts>,
+    params?: fc.Parameters<Ts>
+  ): void => internalTestProp(test.only, label, arbitraries, prop, params);
+  export const failing = <Ts extends any[]>(
+    label: string,
+    arbitraries: ArbitraryTuple<Ts>,
+    prop: Prop<Ts>,
+    params?: fc.Parameters<Ts>
+  ): void => internalTestProp(test.failing, label, arbitraries, prop, params);
+  export const skip = <Ts extends any[]>(
+    label: string,
+    arbitraries: ArbitraryTuple<Ts>,
+    prop: Prop<Ts>,
+    params?: fc.Parameters<Ts>
+  ): void => internalTestProp(test.skip, label, arbitraries, prop, params);
 }
 
 export { test, fc };
