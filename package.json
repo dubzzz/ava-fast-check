@@ -1,0 +1,35 @@
+{
+  "name": "ava-fast-check",
+  "version": "1.0.0",
+  "description": "Ava wrapper for fast-check property based testing framework",
+  "main": "lib/ava-fast-check.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format:check": "prettier --list-different \"**/*.ts\"",
+    "format:fix": "prettier --write \"**/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dubzzz/ava-fast-check.git"
+  },
+  "author": "Nicolas DUBIEN <github@dubien.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dubzzz/ava-fast-check/issues"
+  },
+  "homepage": "https://github.com/dubzzz/ava-fast-check#readme",
+  "peerDependencies": {
+    "ava": ">=0.1.0",
+    "fast-check": "^1.0.0"
+  },
+  "dependencies": {
+    "ts-node": "^7.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "fast-check": "^1.5.0",
+    "prettier": "^1.14.2",
+    "typescript": "^3.1.0-dev.20180905"
+  }
+}
