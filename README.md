@@ -27,7 +27,7 @@ Please note that the properties accepted by `ava-fast-check` as input can either
 
 ## Advanced
 
-If you want to forward custom parameters to fast-check, `testProp` accepts an optional argument accepting instances of `fc.Parameters` ([more](https://github.com/dubzzz/fast-check/blob/master/documentation/Runners.md#runners)).
+If you want to forward custom parameters to fast-check, `testProp` accepts an optional `fc.Parameters` ([more](https://github.com/dubzzz/fast-check/blob/master/documentation/Runners.md#runners)).
 
 `ava-fast-check` also comes with `.only`, `.skip` and `.failing` from ava.
 
