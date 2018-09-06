@@ -1,7 +1,7 @@
 {
   "name": "ava-fast-check",
   "version": "1.0.0",
-  "description": "Ava wrapper for fast-check property based testing framework",
+  "description": " Property based testing for AVA based on fast-check",
   "main": "lib/ava-fast-check.js",
   "scripts": {
     "build": "tsc",
