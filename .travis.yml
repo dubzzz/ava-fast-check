@@ -4,3 +4,12 @@ node_js:
 script:
 - npm run build
 - npm run test
+deploy:
+  provider: npm
+  email: npm@dubien.org
+  skip_cleanup: true
+  api_key:
+    secure: BhRb3kvKivY9lOljUL6tWKrhzc6YBYycI9TmugLZWtZko0fi445nkevQwmBqPQDArJtsLqod5AScYq/A75FT21J1mvyccPNavtRTfG4NbI0hzrodb6jwUXOglUxUzupk6ss8NMl7hFG3coTtXKM4sp68baktBuI9huO/i8+3aHWE/ib4cDkfwiPOw4xUHJ9t2zBND6QtQu9UfHY3o/z9Pk83kvL6xR5QW7yT7DnTuw8scn5/aP7x3Lol7QYAREdB+upuyoNTfYaXrJkosnNzXYB4kiKYPk9/Bh1L2lbpbdylcRo/15BNFJnwZPTF9BoQ+Wpkhz7MsxNnBsebY8DmPa/vJ1lCXvB8y+EHRe3CrStGvFZLXq8LM/kUcxxKRdVI54vgv9H6oR0LnmhoYkjd+fIQHNnwgGRtuLVMwJ4L7BdCcBew13pbnE8nOiltB/HKOgJVYZSG+UU/BS1WJWKHZQobysbja8wJbYq2XkEmd4Qbr7u9w18oTWPuWuBBNu1Fn5M4vRrMsqhtMnkWd9YyvwkuFYawH0VQjFrOV+lesD/Ev9rZrpsxuu6FiIy9+5+FKKFokqvbnizwOr2L69L/hmbDj/Oht6lUUT1yLpRPQJ7NbXv6h2NG/0tuRv2Ittqlo+yLDs76sHxB4uJBUhNXh8KnLTYCbaGQnDAhB4eAB5s=
+  on:
+    tags: true
+    repo: dubzzz/ava-fast-check
