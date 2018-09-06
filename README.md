@@ -1,6 +1,7 @@
 # Property based testing for AVA based on [fast-check](https://github.com/dubzzz/fast-check/)
 
 [![Build Status](https://travis-ci.org/dubzzz/ava-fast-check.svg?branch=master)](https://travis-ci.org/dubzzz/ava-fast-check)
+[![npm version](https://badge.fury.io/js/ava-fast-check.svg)](https://badge.fury.io/js/ava-fast-check)
 
 Bring the power of property based testing framework fast-check into ava.
 `ava-fast-check` simplifies the integration of fast-check into ava testing framework.
