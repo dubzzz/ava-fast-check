@@ -1,6 +1,6 @@
 #!/bin/sh
 
-npm run test &> test/out.log
+npm run ava-test &> test/out.log
 
 for expectedContent in \
         "ok 1 - should pass on truthy synchronous property" \

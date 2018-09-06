@@ -5,7 +5,8 @@
   "main": "lib/ava-fast-check.js",
   "scripts": {
     "build": "tsc",
-    "test": "ava -s -t",
+    "ava-test": "ava -s -t",
+    "test": "sh test.sh",
     "format:check": "prettier --list-different \"**/*.{js,ts}\"",
     "format:fix": "prettier --write \"**/*.{js,ts}\""
   },
