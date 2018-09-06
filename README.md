@@ -31,7 +31,7 @@ If you want to forward custom parameters to fast-check, `testProp` accepts an op
 
 `ava-fast-check` also comes with `.only`, `.skip` and `.failing` from ava.
 
-```
+```javascript
 import { testProp, fc } from 'ava-fast-check';
 
 testProp('should replay the test for the seed 4242', [fc.nat(), fc.nat()], (a, b) => {
