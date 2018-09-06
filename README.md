@@ -1,7 +1,7 @@
 # Property based testing for AVA based on [fast-check](https://github.com/dubzzz/fast-check/)
 
 Bring the power of property based testing framework fast-check into ava.
-ava-fast-check simplifies the integration of fast-check with ava testing framework.
+`ava-fast-check` simplifies the integration of fast-check into ava testing framework.
 
 ## Getting started
 
