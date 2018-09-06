@@ -19,8 +19,9 @@ function internalTestProp<Ts extends any[]>(
   prop: Prop<Ts>,
   params?: fc.Parameters<Ts>
 ): void {
+  const customParams: fc.Parameters<Ts> = params || { seed: Date.now() };
   const promiseProp = wrapProp(prop);
-  testFn(label, async t => {
+  testFn(`${label} (with seed=${customParams.seed})`, async t => {
     await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp), params);
     t.pass();
   });
