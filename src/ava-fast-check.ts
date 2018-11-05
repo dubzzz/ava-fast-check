@@ -55,6 +55,12 @@ export namespace testProp {
     prop: Prop<Ts>,
     params?: fc.Parameters<Ts>
   ): void => internalTestProp(test.skip, label, arbitraries, prop, params);
+  export const serial = <Ts extends any[]>(
+    label: string,
+    arbitraries: ArbitraryTuple<Ts>,
+    prop: Prop<Ts>,
+    params?: fc.Parameters<Ts>
+  ): void => internalTestProp(test.serial, label, arbitraries, prop, params);
 }
 
 export { test, fc };
