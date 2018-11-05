@@ -12,7 +12,8 @@ for expectedContent in \
         "not ok 7 - should fail as the property passes" \
         "ok 8 - should never be executed (with seed=48) # SKIP" \
         "ok 9 - should run first" \
-        "ok 10 - should run after"
+        "ok 10 - should run after" \
+        "ok 11 - should run serially"
 do
     cat test/out.log | grep "${expectedContent}" >/dev/null 2>&1
     if [ $? -ne 0 ]; then
