@@ -31,6 +31,8 @@ testProp.failing('should fail as the property passes', [fc.boolean()], a => a ||
 testProp.skip('should never be executed', [fc.boolean()], a => a, { seed: 48 });
 
 // testProp.serial
+
+// Test that one serial run is after the other
 let serialRun = false;
 testProp.serial("should run first", [fc.boolean()], async a => {
   serialRun = true;
@@ -39,4 +41,12 @@ testProp.serial("should run first", [fc.boolean()], async a => {
 });
 testProp.serial("should run after", [fc.boolean()], async a => {
   return a == a && serialRun;
+});
+
+// Test that each execution of a test is run serially (and in order)
+let runs = 0;
+testProp.serial("should run serially", [fc.boolean()], async a => {
+  let run = runs++;
+  delay(a ? 1 : 0);
+  return a == a && runs == (run + 1);
 });
