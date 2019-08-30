@@ -21,7 +21,7 @@ function internalTestProp<Ts extends any[]>(
 ): void {
   const customParams: fc.Parameters<Ts> = params || {};
   if (customParams.seed === undefined) customParams.seed = Date.now();
-  
+
   const promiseProp = wrapProp(prop);
   testFn(`${label} (with seed=${customParams.seed})`, async t => {
     await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp), params);
