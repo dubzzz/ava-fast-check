@@ -3,6 +3,7 @@
   "version": "1.1.2",
   "description": " Property based testing for AVA based on fast-check",
   "main": "lib/ava-fast-check.js",
+  "types": "lib/ava-fast-check.d.ts",
   "scripts": {
     "build": "tsc",
     "ava-test": "ava -s -t",
