@@ -3,16 +3,16 @@ import * as fc from 'fast-check';
 
 // Pre-requisite: https://github.com/Microsoft/TypeScript/pull/26063
 // Require TypeScript 3.1
-type ArbitraryTuple<Ts> = { [P in keyof Ts]: fc.Arbitrary<Ts[P]> };
+type ArbitraryTuple<Ts extends [any] | any[]> = { [P in keyof Ts]: fc.Arbitrary<Ts[P]> };
 
-type Prop<Ts extends any[]> = (...args: Ts) => boolean | void | PromiseLike<boolean | void>;
-type PromiseProp<Ts extends any[]> = (...args: Ts) => Promise<boolean | void>;
+type Prop<Ts extends [any] | any[]> = (...args: Ts) => boolean | void | PromiseLike<boolean | void>;
+type PromiseProp<Ts extends [any] | any[]> = (...args: Ts) => Promise<boolean | void>;
 
-function wrapProp<Ts extends any[]>(prop: Prop<Ts>): PromiseProp<Ts> {
+function wrapProp<Ts extends [any] | any[]>(prop: Prop<Ts>): PromiseProp<Ts> {
   return (...args: Ts) => Promise.resolve(prop(...args));
 }
 
-function internalTestProp<Ts extends any[]>(
+function internalTestProp<Ts extends [any] | any[]>(
   testFn: (label: string, exec: GenericTest<Context<any>>) => void,
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
@@ -24,12 +24,12 @@ function internalTestProp<Ts extends any[]>(
 
   const promiseProp = wrapProp(prop);
   testFn(`${label} (with seed=${customParams.seed})`, async t => {
-    await fc.assert((fc.asyncProperty as any)(...arbitraries, promiseProp), params);
+    await fc.assert((fc.asyncProperty as any)(...(arbitraries as any), promiseProp), params);
     t.pass();
   });
 }
 
-export function testProp<Ts extends any[]>(
+export function testProp<Ts extends [any] | any[]>(
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
   prop: Prop<Ts>,
@@ -39,25 +39,25 @@ export function testProp<Ts extends any[]>(
 }
 
 export namespace testProp {
-  export const only = <Ts extends any[]>(
+  export const only = <Ts extends [any] | any[]>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
     prop: Prop<Ts>,
     params?: fc.Parameters<Ts>
   ): void => internalTestProp(test.only, label, arbitraries, prop, params);
-  export const failing = <Ts extends any[]>(
+  export const failing = <Ts extends [any] | any[]>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
     prop: Prop<Ts>,
     params?: fc.Parameters<Ts>
   ): void => internalTestProp(test.failing, label, arbitraries, prop, params);
-  export const skip = <Ts extends any[]>(
+  export const skip = <Ts extends [any] | any[]>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
     prop: Prop<Ts>,
     params?: fc.Parameters<Ts>
   ): void => internalTestProp(test.skip, label, arbitraries, prop, params);
-  export const serial = <Ts extends any[]>(
+  export const serial = <Ts extends [any] | any[]>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
     prop: Prop<Ts>,
