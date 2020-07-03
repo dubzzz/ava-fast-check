@@ -25,12 +25,12 @@
   },
   "homepage": "https://github.com/dubzzz/ava-fast-check#readme",
   "peerDependencies": {
-    "ava": ">=0.1.0",
+    "ava": ">=3.9.0",
     "fast-check": "^1.0.0"
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "^3.9.0",
     "fast-check": "^1.25.1",
     "prettier": "^1.19.1",
     "ts-node": "^8.10.2",
