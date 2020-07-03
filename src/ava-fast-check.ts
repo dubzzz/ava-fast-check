@@ -1,19 +1,46 @@
-import test, { GenericTest, Context } from 'ava';
+import test, { ExecutionContext, Implementation, ImplementationResult, TryResult } from 'ava';
 import * as fc from 'fast-check';
 
 // Pre-requisite: https://github.com/Microsoft/TypeScript/pull/26063
 // Require TypeScript 3.1
 type ArbitraryTuple<Ts extends [any] | any[]> = { [P in keyof Ts]: fc.Arbitrary<Ts[P]> };
 
-type Prop<Ts extends [any] | any[]> = (...args: Ts) => boolean | void | PromiseLike<boolean | void>;
-type PromiseProp<Ts extends [any] | any[]> = (...args: Ts) => Promise<boolean | void>;
+type Prop<Ts extends [any] | any[]> = (t: ExecutionContext, ...args: Ts) => ImplementationResult;
 
-function wrapProp<Ts extends [any] | any[]>(prop: Prop<Ts>): PromiseProp<Ts> {
-  return (...args: Ts) => Promise.resolve(prop(...args));
+function wrapProp<Ts extends [any] | any[]>(
+  arbitraries: ArbitraryTuple<Ts>,
+  prop: Prop<Ts>,
+  params?: fc.Parameters<Ts>
+): Implementation {
+  return async t => {
+    let failingTry: undefined | TryResult;
+
+    try {
+      await fc.assert(
+        (fc.asyncProperty as any)(...(arbitraries as any), async (...args: Ts) => {
+          const tryResult = await t.try(tt => prop(tt, ...args));
+
+          if (tryResult.passed) {
+            tryResult.commit();
+            return true;
+          }
+
+          failingTry = tryResult;
+          return false;
+        }),
+        params
+      );
+    } catch (error) {
+      t.log(error.message);
+      (failingTry?.commit ?? t.fail)();
+    }
+
+    t.pass();
+  };
 }
 
 function internalTestProp<Ts extends [any] | any[]>(
-  testFn: (label: string, exec: GenericTest<Context<any>>) => void,
+  testFn: (label: string, exec: Implementation) => void,
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
   prop: Prop<Ts>,
@@ -22,11 +49,7 @@ function internalTestProp<Ts extends [any] | any[]>(
   const customParams: fc.Parameters<Ts> = params || {};
   if (customParams.seed === undefined) customParams.seed = Date.now();
 
-  const promiseProp = wrapProp(prop);
-  testFn(`${label} (with seed=${customParams.seed})`, async t => {
-    await fc.assert((fc.asyncProperty as any)(...(arbitraries as any), promiseProp), params);
-    t.pass();
-  });
+  testFn(`${label} (with seed=${customParams.seed})`, wrapProp(arbitraries, prop, params));
 }
 
 export function testProp<Ts extends [any] | any[]>(
