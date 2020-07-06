@@ -1,15 +1,15 @@
 language: node_js
 node_js:
-- '10'
+  - "14"
 script:
-- npm run build
-- npm run test
+  - npm run build
+  - npm run test
 deploy:
   provider: npm
   email: npm@dubien.org
   skip_cleanup: true
   api_key:
-    secure: BhRb3kvKivY9lOljUL6tWKrhzc6YBYycI9TmugLZWtZko0fi445nkevQwmBqPQDArJtsLqod5AScYq/A75FT21J1mvyccPNavtRTfG4NbI0hzrodb6jwUXOglUxUzupk6ss8NMl7hFG3coTtXKM4sp68baktBuI9huO/i8+3aHWE/ib4cDkfwiPOw4xUHJ9t2zBND6QtQu9UfHY3o/z9Pk83kvL6xR5QW7yT7DnTuw8scn5/aP7x3Lol7QYAREdB+upuyoNTfYaXrJkosnNzXYB4kiKYPk9/Bh1L2lbpbdylcRo/15BNFJnwZPTF9BoQ+Wpkhz7MsxNnBsebY8DmPa/vJ1lCXvB8y+EHRe3CrStGvFZLXq8LM/kUcxxKRdVI54vgv9H6oR0LnmhoYkjd+fIQHNnwgGRtuLVMwJ4L7BdCcBew13pbnE8nOiltB/HKOgJVYZSG+UU/BS1WJWKHZQobysbja8wJbYq2XkEmd4Qbr7u9w18oTWPuWuBBNu1Fn5M4vRrMsqhtMnkWd9YyvwkuFYawH0VQjFrOV+lesD/Ev9rZrpsxuu6FiIy9+5+FKKFokqvbnizwOr2L69L/hmbDj/Oht6lUUT1yLpRPQJ7NbXv6h2NG/0tuRv2Ittqlo+yLDs76sHxB4uJBUhNXh8KnLTYCbaGQnDAhB4eAB5s=
+    secure: GNnJLPgoPLqYNl2F1wlbOIgGwZ9Lqq/aSA791M/ZnwzK77hoHcX6KjrStmvhVdAskQQMfCgM8p92k4XVJbOz9SL2LcLWkdRuRdoPzvDnDWq1fnemnsbzkyItZKLEyFwvKaQx5RGVEkzCa3rkWyJUE8RGJM8rd65R2RvO+h0srgLq8GRJsj0Hdt0zo9Ti95tJpbA2HLkNwPN+D9uZg7dV98rsNEq6yg4Ctg9KDZ3tqZpTDCM0wALIfkjys+RD1xSrjwSlWa4wkPP6sy7LlRfDIeWktRKYN/J+KY811Mi+wLk9Qx3aqhr1XgOToWYqWlCYNXKlFntVxPMJOGbQ9FF75636oqoDi724dFfuXiMMxumwChI3oHHc4Go1oT/4dTK2vOxCtnnLh+fRsoG1IX5Y020rkNIyRXGrTVWJ1sOkilgW+ooS3j9pk96arxGahDEaeoEh02mfuMZLl8WeIKtpG5X+9f1XN/aqIQxgQvZohr+8hW9TuPV6S7ZjuAaaSik7KadlJml/UwaLtAUS7FoS3KwNpz35oxBk8oOT09cnqwhmYWBxJxWzqqbC5ThFQYRjCEc4TEI6QFbQMaeDhoDrB1iOcEaoTwe9DlltYUAK01w4svkZMbbWtezF9Vb+uxEYMKb1nQYvIBMSLzug6ddrIBW1NrRrP1yLsh0rnnj+Trc=
   on:
     tags: true
     repo: dubzzz/ava-fast-check
