@@ -1,6 +1,15 @@
 import { testProp, fc } from 'ava-fast-check';
 
-console.log({ testProp, fc });
+console.log({
+  testProp,
+  fc,
+  string: fc.string
+});
+
+console.log({
+  typeof_string: typeof fc.string,
+  ctor_string: fc.string__proto__.constructor.name
+});
 
 // for all a, b, c strings
 // b is a substring of a + b + c
