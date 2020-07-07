@@ -17,7 +17,7 @@ npm install --save-dev ava fast-check ava-fast-check
 ## Example
 
 ```javascript
-const { testProp, fc } = require("ava-fast-check");
+import { testProp, fc } from 'ava-fast-check';
 
 // for all a, b, c strings
 // b is a substring of a + b + c
