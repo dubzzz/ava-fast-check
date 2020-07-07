@@ -10,7 +10,7 @@
     "devDependencies": {
         "ava": "^3.10.0",
         "ava-fast-check": "file:../../bundle/package",
-        "fast-check": "^1.25.1"
+        "fast-check": "2.0.0-alpha.1.25.1.0"
       }
   }
   
