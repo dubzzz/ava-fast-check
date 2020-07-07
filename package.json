@@ -2,14 +2,21 @@
   "name": "ava-fast-check",
   "version": "2.0.0",
   "description": " Property based testing for AVA based on fast-check",
+  "type": "commonjs",
   "main": "lib/ava-fast-check.js",
+  "exports": {
+    ".": {
+      "require": "./lib/ava-fast-check.js",
+      "default": "./lib/esm/ava-fast-check.js"
+    }
+  },
   "module": "lib/esm/ava-fast-check.js",
   "types": "lib/ava-fast-check.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
-    "build": "tsc && tsc --module es2015 --moduleResolution node --outDir lib/esm",
+    "build": "tsc && tsc --module es2015 --moduleResolution node --outDir lib/esm && cp package.esm-template.json lib/esm/package.json",
     "ava-test": "ava -s -t",
     "test": "sh test.sh",
     "format:check": "prettier --list-different \"**/*.{js,ts}\"",
