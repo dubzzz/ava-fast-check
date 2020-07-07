@@ -1,4 +1,6 @@
 .vscode/
+bundle/
 lib/
 node_modules/
 test/out.log
+*.tgz
