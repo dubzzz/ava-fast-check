@@ -46,6 +46,9 @@
     "fast-check"
   ],
   "ava": {
+    "files": [
+      "test/**/*"
+    ],
     "require": [
       "esm"
     ]
