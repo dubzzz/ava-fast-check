@@ -1,4 +1,5 @@
 import { testProp, fc } from 'ava-fast-check';
+import fc from 'fast-check';
 
 console.log({
   testProp,
