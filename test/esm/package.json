@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "esm",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "ava"
+},
+  "devDependencies": {
+    "ava": "^3.10.0",
+    "ava-fast-check": "*",
+    "fast-check": "^1.25.1"
+  }
+}

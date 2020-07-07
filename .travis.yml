@@ -2,8 +2,25 @@ language: node_js
 node_js:
   - "14"
 script:
+  - PROJECT_ROOT_PATH="$(pwd)"
+  # Classical test workflow
   - npm run build
   - npm run test
+  # Checking the bundle against commonjs and esm configurations
+  ## Instead of linking on ., we pack the package as if it was released on npm registry
+  ## then we link towards this version (no devDependencies installed, no unpublished files available...).
+  - cd "$PROJECT_ROOT_PATH"
+  - npm pack && mkdir -p bundle && tar -C bundle -zxvf ava-fast-check-*.tgz && cd bundle/package && yarn install --production && ls -l node_modules && yarn link
+  - cd "$PROJECT_ROOT_PATH"
+  - ls -l ~/.config/yarn/link 2> /dev/null || echo "no-op"
+  - ls -l ~/AppData/Local/Yarn/Data/link 2> /dev/null || echo "no-op"
+  - rm -rf node_modules/
+  ## CommonJS
+  - cd "$PROJECT_ROOT_PATH"
+  - cd test/commonjs && yarn --ignore-engines && yarn link "ava-fast-check" && yarn test
+  ## ESM
+  - cd "$PROJECT_ROOT_PATH"
+  - cd test/esm && yarn --ignore-engines && yarn link "ava-fast-check" && yarn test
 deploy:
   provider: npm
   email: npm@dubien.org
