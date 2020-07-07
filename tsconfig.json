@@ -10,7 +10,7 @@
         "strictNullChecks": true,
         "downlevelIteration": true,
         "module": "commonjs",
-        "target": "es6",
+        "target": "es3",
         "lib": [
             "es6"
         ],

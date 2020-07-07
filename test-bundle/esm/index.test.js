@@ -1,5 +1,4 @@
-import { testProp } from 'ava-fast-check';
-import fc from 'fast-check';
+import { testProp, fc } from 'ava-fast-check';
 
 // for all a, b, c strings
 // b is a substring of a + b + c
