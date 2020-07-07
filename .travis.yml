@@ -14,10 +14,10 @@ script:
   - rm -rf node_modules/
   ## CommonJS
   - cd "$PROJECT_ROOT_PATH"
-  - cd test-bundle/commonjs && yarn --ignore-engines && yarn test
+  - cd test-bundle/commonjs && yarn && yarn test
   ## ESM
   - cd "$PROJECT_ROOT_PATH"
-  - cd test-bundle/esm && yarn --ignore-engines && yarn test
+  - cd test-bundle/esm && yarn && yarn test
 deploy:
   provider: npm
   email: npm@dubien.org
