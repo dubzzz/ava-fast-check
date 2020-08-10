@@ -18,6 +18,8 @@ script:
   ## ESM
   - cd "$PROJECT_ROOT_PATH"
   - cd test-bundle/esm && yarn && yarn test
+  ## Cleaning for deploy
+  - cd "$PROJECT_ROOT_PATH"
 deploy:
   provider: npm
   email: npm@dubien.org
