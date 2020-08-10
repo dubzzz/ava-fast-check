@@ -34,13 +34,13 @@
   "homepage": "https://github.com/dubzzz/ava-fast-check#readme",
   "peerDependencies": {
     "ava": ">=3.9.0",
-    "fast-check": ">=1.0.0"
+    "fast-check": "^2.0.0"
   },
   "dependencies": {},
   "devDependencies": {
     "ava": "^3.9.0",
     "esm": "^3.2.25",
-    "fast-check": "^1.25.1",
+    "fast-check": "^2.0.0",
     "prettier": "^1.19.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
