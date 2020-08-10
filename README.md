@@ -50,5 +50,12 @@ testProp.failing('should be skipped', [fc.fullUnicodeString()], (t, text) => {
 
 ## Minimal requirements
 
-- `ava >=3.9.0` for [`t.try`](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#trytitle-implementation--macro--macro-args) support
-- `fast-check ^1.0.0`
+| ava-fast-check | ava                   | fast-check           |
+|----------------|-----------------------|----------------------|
+| ^3.0.0         | >=3.9.0<sup>(1)</sup> | ^2.0.0<sup>(2)</sup> |
+| ^2.0.0         | >=3.9.0<sup>(1)</sup> | ^1.0.0               |
+| ^1.0.0         | >=0.1.0<sup>(3)</sup> | ^2.0.0               |
+
+- (1) `ava@>=3.9.0` for [`t.try`](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#trytitle-implementation--macro--macro-args) support
+- (2) `fast-check@^2.0.0` for hybrid module support: `commonjs` and `esm` together
+- (3) `ava@>=0.1.0` for its Promise support
