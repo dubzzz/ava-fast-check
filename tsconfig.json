@@ -2,12 +2,10 @@
     "compilerOptions": {
         "declaration": true,
         "sourceMap": false,
+        "strict": true,
         "alwaysStrict": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "strictNullChecks": true,
         "downlevelIteration": true,
         "module": "commonjs",
         "target": "es3",
