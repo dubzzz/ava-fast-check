@@ -59,12 +59,12 @@ testProp.skip('should be skipped', [fc.fullUnicodeString()], (t, text) => {
 
 ### AVA `before`/`after` Hooks
 
-Import `test` from `ava-fast-check` to use `before`/`after` [hooks]:
+`ava-fast-check` exposes AVA's `before`/`after` [hooks]:
 
 ```typescript
-import { test, testProp, fc } from 'ava-fast-check';
+import { testProp, fc } from 'ava-fast-check';
 
-test.before(t => {
+testProp.before(t => {
   connectToDatabase();
 });
 
@@ -72,7 +72,7 @@ testProp(
   // ... omitted for brevity
 );
 
-test.after(t => {
+testProp.after(t => {
   closeDatabaseConnection();
 });
 ```

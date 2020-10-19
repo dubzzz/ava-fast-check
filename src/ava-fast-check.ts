@@ -1,4 +1,6 @@
 import test, {
+  AfterInterface,
+  BeforeInterface,
   ExecutionContext,
   Implementation,
   ImplementationResult,
@@ -11,9 +13,9 @@ export { fc, test };
 
 type NonEmptyArray<A> = A[] & {0: A};
 
-// Pre-requisite: https://github.com/Microsoft/TypeScript/pull/26063
-// Require TypeScript 3.1
-type ArbitraryTuple<Ts extends NonEmptyArray<any>> = { [P in keyof Ts]: fc.Arbitrary<Ts[P]> };
+type ArbitraryTuple<Ts extends NonEmptyArray<any>> = {
+  [P in keyof Ts]: fc.Arbitrary<Ts[P]>
+};
 
 type Prop<Context, Ts extends NonEmptyArray<any>> = (
   t: ExecutionContext<Context>,
@@ -33,9 +35,13 @@ type AvaModifierWhitelist =
   | 'skip'
   | 'serial'
 
-export type PropertyTestInterface<Context> = PropertyTest<Context> & {
-  [Modifier in AvaModifierWhitelist]: PropertyTest<Context>;
-}
+export type PropertyTestInterface<Context> =
+  & PropertyTest<Context>
+  & { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> }
+  & {
+    before: BeforeInterface<Context>,
+    after: AfterInterface<Context>,
+  }
 
 function wrapProp<Context, Ts extends NonEmptyArray<any>>(
   arbitraries: ArbitraryTuple<Ts>,
@@ -102,6 +108,8 @@ export const testProp: PropertyTestInterface<unknown> = Object.assign(
     only: exposeModifier('only'),
     failing: exposeModifier('failing'),
     skip: exposeModifier('skip'),
-    serial: exposeModifier('serial')
+    serial: exposeModifier('serial'),
+    before: test.before,
+    after: test.after,
   }
-)
+);
