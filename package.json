@@ -1,6 +1,6 @@
 {
   "name": "ava-fast-check",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": " Property based testing for AVA based on fast-check",
   "type": "commonjs",
   "main": "lib/ava-fast-check.js",
