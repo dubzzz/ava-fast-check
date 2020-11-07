@@ -1,17 +1,53 @@
-import test, { ExecutionContext, Implementation, ImplementationResult, TryResult } from 'ava';
+import test, {
+  AfterInterface,
+  BeforeInterface,
+  ExecutionContext,
+  Implementation,
+  ImplementationResult,
+  TestInterface,
+  TryResult
+} from 'ava';
 import * as fc from 'fast-check';
 
-// Pre-requisite: https://github.com/Microsoft/TypeScript/pull/26063
-// Require TypeScript 3.1
-type ArbitraryTuple<Ts extends [any] | any[]> = { [P in keyof Ts]: fc.Arbitrary<Ts[P]> };
+export { fc, test };
 
-type Prop<Ts extends [any] | any[]> = (t: ExecutionContext, ...args: Ts) => ImplementationResult;
+type NonEmptyArray<A> = A[] & {0: A};
 
-function wrapProp<Ts extends [any] | any[]>(
+type ArbitraryTuple<Ts extends NonEmptyArray<any>> = {
+  [P in keyof Ts]: fc.Arbitrary<Ts[P]>
+};
+
+type Prop<Context, Ts extends NonEmptyArray<any>> = (
+  t: ExecutionContext<Context>,
+  ...args: Ts
+) => ImplementationResult;
+
+type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
+  label: string,
   arbitraries: ArbitraryTuple<Ts>,
-  prop: Prop<Ts>,
+  prop: Prop<Context, Ts>,
   params?: fc.Parameters<Ts>
-): Implementation {
+) => void;
+
+type AvaModifierWhitelist =
+  | 'only'
+  | 'failing'
+  | 'skip'
+  | 'serial'
+
+export type PropertyTestInterface<Context> =
+  & PropertyTest<Context>
+  & { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> }
+  & {
+    before: BeforeInterface<Context>,
+    after: AfterInterface<Context>,
+  }
+
+function wrapProp<Context, Ts extends NonEmptyArray<any>>(
+  arbitraries: ArbitraryTuple<Ts>,
+  prop: Prop<Context, Ts>,
+  params?: fc.Parameters<Ts>
+): Implementation<Context> {
   return async t => {
     let failingTry: undefined | TryResult;
 
@@ -39,11 +75,11 @@ function wrapProp<Ts extends [any] | any[]>(
   };
 }
 
-function internalTestProp<Ts extends [any] | any[]>(
-  testFn: (label: string, exec: Implementation) => void,
+function internalTestProp<Context, Ts extends NonEmptyArray<any>>(
+  testFn: (label: string, exec: Implementation<Context>) => void,
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
-  prop: Prop<Ts>,
+  prop: Prop<Context, Ts>,
   params?: fc.Parameters<Ts>
 ): void {
   const customParams: fc.Parameters<Ts> = params || {};
@@ -52,40 +88,28 @@ function internalTestProp<Ts extends [any] | any[]>(
   testFn(`${label} (with seed=${customParams.seed})`, wrapProp(arbitraries, prop, params));
 }
 
-export function testProp<Ts extends [any] | any[]>(
-  label: string,
-  arbitraries: ArbitraryTuple<Ts>,
-  prop: Prop<Ts>,
-  params?: fc.Parameters<Ts>
-): void {
-  internalTestProp(test, label, arbitraries, prop, params);
+function exposeModifier<Context, T extends Extract<keyof TestInterface, AvaModifierWhitelist>>(
+  modifier: T
+): PropertyTest<Context> {
+  return (label, arbitraries, prop, params) =>
+    internalTestProp((test as TestInterface<Context>)[modifier], label, arbitraries, prop, params);
 }
 
-export namespace testProp {
-  export const only = <Ts extends [any] | any[]>(
+export const testProp: PropertyTestInterface<unknown> = Object.assign(
+  function testProp<Context, Ts extends NonEmptyArray<any>>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
-    prop: Prop<Ts>,
+    prop: Prop<Context, Ts>,
     params?: fc.Parameters<Ts>
-  ): void => internalTestProp(test.only, label, arbitraries, prop, params);
-  export const failing = <Ts extends [any] | any[]>(
-    label: string,
-    arbitraries: ArbitraryTuple<Ts>,
-    prop: Prop<Ts>,
-    params?: fc.Parameters<Ts>
-  ): void => internalTestProp(test.failing, label, arbitraries, prop, params);
-  export const skip = <Ts extends [any] | any[]>(
-    label: string,
-    arbitraries: ArbitraryTuple<Ts>,
-    prop: Prop<Ts>,
-    params?: fc.Parameters<Ts>
-  ): void => internalTestProp(test.skip, label, arbitraries, prop, params);
-  export const serial = <Ts extends [any] | any[]>(
-    label: string,
-    arbitraries: ArbitraryTuple<Ts>,
-    prop: Prop<Ts>,
-    params?: fc.Parameters<Ts>
-  ): void => internalTestProp(test.serial, label, arbitraries, prop, params);
-}
-
-export { test, fc };
+  ): void {
+    internalTestProp(test as TestInterface<Context>, label, arbitraries, prop, params);
+  },
+  {
+    only: exposeModifier('only'),
+    failing: exposeModifier('failing'),
+    skip: exposeModifier('skip'),
+    serial: exposeModifier('serial'),
+    before: test.before,
+    after: test.after,
+  }
+);
