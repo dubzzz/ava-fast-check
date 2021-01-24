@@ -1,7 +1,7 @@
 import { testProp, fc } from '../lib/ava-fast-check';
 
-const delay = duration =>
-  new Promise(resolve => {
+const delay = (duration) =>
+  new Promise((resolve) => {
     setTimeout(() => resolve(), duration);
   });
 
@@ -19,7 +19,7 @@ testProp('should fail on falsy asynchronous property', [fc.nat()], async (t, a) 
   await delay(0);
   t.true(typeof a === 'string');
 });
-testProp('should fail with seed=4242 and path="25"', [fc.constant(null)], t => t.fail(), { seed: 4242, path: '25' });
+testProp('should fail with seed=4242 and path="25"', [fc.constant(null)], (t) => t.fail(), { seed: 4242, path: '25' });
 testProp('should pass on followed plan', [fc.array(fc.nat())], (t, array) => {
   t.plan(array.length);
 
@@ -36,7 +36,7 @@ testProp('should fail on not followed plan', [fc.array(fc.nat())], (t, array) =>
 });
 testProp('should pass kitchen sink', [fc.array(fc.nat())], (t, array) => {
   t.log('testing');
-  t.false(array.some(value => value < 0));
+  t.false(array.some((value) => value < 0));
 
   const reduceSum = array.reduce((a, b) => a + b, 0);
   let forSum = 0;
@@ -52,7 +52,7 @@ testProp('should pass kitchen sink', [fc.array(fc.nat())], (t, array) => {
 });
 testProp('should fail kitchen sink', [fc.array(fc.nat())], (t, array) => {
   t.log('testing');
-  t.false(array.some(value => value < 0));
+  t.false(array.some((value) => value < 0));
 
   const reduceSum = array.reduce((a, b) => a + b, 0);
   let forSum = 0;
