@@ -20,7 +20,7 @@
     "ava-test": "ava -s -t",
     "test": "sh test.sh",
     "format:check": "prettier --list-different \"**/*.{js,ts}\"",
-    "format:fix": "prettier --write \"**/*.{js,ts}\""
+    "format": "prettier --write \"**/*.{js,ts}\""
   },
   "repository": {
     "type": "git",

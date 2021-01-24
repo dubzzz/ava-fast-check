@@ -11,16 +11,13 @@ import * as fc from 'fast-check';
 
 export { fc, test };
 
-type NonEmptyArray<A> = A[] & {0: A};
+type NonEmptyArray<A> = A[] & { 0: A };
 
 type ArbitraryTuple<Ts extends NonEmptyArray<any>> = {
-  [P in keyof Ts]: fc.Arbitrary<Ts[P]>
+  [P in keyof Ts]: fc.Arbitrary<Ts[P]>;
 };
 
-type Prop<Context, Ts extends NonEmptyArray<any>> = (
-  t: ExecutionContext<Context>,
-  ...args: Ts
-) => ImplementationResult;
+type Prop<Context, Ts extends NonEmptyArray<any>> = (t: ExecutionContext<Context>, ...args: Ts) => ImplementationResult;
 
 type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
   label: string,
@@ -29,19 +26,13 @@ type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
   params?: fc.Parameters<Ts>
 ) => void;
 
-type AvaModifierWhitelist =
-  | 'only'
-  | 'failing'
-  | 'skip'
-  | 'serial'
+type AvaModifierWhitelist = 'only' | 'failing' | 'skip' | 'serial';
 
-export type PropertyTestInterface<Context> =
-  & PropertyTest<Context>
-  & { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> }
-  & {
-    before: BeforeInterface<Context>,
-    after: AfterInterface<Context>,
-  }
+export type PropertyTestInterface<Context> = PropertyTest<Context> &
+  { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> } & {
+    before: BeforeInterface<Context>;
+    after: AfterInterface<Context>;
+  };
 
 function wrapProp<Context, Ts extends NonEmptyArray<any>>(
   arbitraries: ArbitraryTuple<Ts>,
@@ -110,6 +101,6 @@ export const testProp: PropertyTestInterface<unknown> = Object.assign(
     skip: exposeModifier('skip'),
     serial: exposeModifier('serial'),
     before: test.before,
-    after: test.after,
+    after: test.after
   }
 );
