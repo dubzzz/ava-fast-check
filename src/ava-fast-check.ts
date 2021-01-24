@@ -5,7 +5,7 @@ import test, {
   Implementation,
   ImplementationResult,
   TestInterface,
-  TryResult
+  TryResult,
 } from 'ava';
 import * as fc from 'fast-check';
 
@@ -39,13 +39,13 @@ function wrapProp<Context, Ts extends NonEmptyArray<any>>(
   prop: Prop<Context, Ts>,
   params?: fc.Parameters<Ts>
 ): Implementation<Context> {
-  return async t => {
+  return async (t) => {
     let failingTry: undefined | TryResult;
 
     try {
       await fc.assert(
         (fc.asyncProperty as any)(...(arbitraries as any), async (...args: Ts) => {
-          const tryResult = await t.try(tt => prop(tt, ...args));
+          const tryResult = await t.try((tt) => prop(tt, ...args));
 
           if (tryResult.passed) {
             tryResult.commit();
@@ -101,6 +101,6 @@ export const testProp: PropertyTestInterface<unknown> = Object.assign(
     skip: exposeModifier('skip'),
     serial: exposeModifier('serial'),
     before: test.before,
-    after: test.after
+    after: test.after,
   }
 );
