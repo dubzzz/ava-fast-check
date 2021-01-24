@@ -51,7 +51,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Unit tests
-        run: yarn test
+        run: |
+          yarn build
+          yarn test
   production_package:
     name: "Build production package"
     runs-on: ubuntu-latest
