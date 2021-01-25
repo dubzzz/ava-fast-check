@@ -60,5 +60,9 @@
     "require": [
       "esm"
     ]
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/fast-check"
   }
 }
