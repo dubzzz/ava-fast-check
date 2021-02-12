@@ -26,15 +26,15 @@ testProp('should detect the substring', [fc.string(), fc.string(), fc.string()],
 });
 ```
 
-The property is passed [AVA's `t` argument](https://github.com/avajs/ava/blob/master/docs/02-execution-context.md#execution-context-t-argument) for its first parameter, and the value of each arbitrary for the current test case for the rest of the parameters.
+The property is passed [AVA's `t` argument](https://github.com/avajs/ava/blob/main/docs/02-execution-context.md#execution-context-t-argument) for its first parameter, and the value of each arbitrary for the current test case for the rest of the parameters.
 
-`ava-fast-check` supports all of [AVA's assertions](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#assertions) and like AVA, supports synchronous and asynchronous functions, including promises, observables, and callbacks. See [AVA's documentation](https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#declaring-test) for more information.
+`ava-fast-check` supports all of [AVA's assertions](https://github.com/avajs/ava/blob/main/docs/03-assertions.md#assertions) and like AVA, supports synchronous and asynchronous functions, including promises, observables, and callbacks. See [AVA's documentation](https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#declaring-test) for more information.
 
 ## Advanced
 
 ### `fast-check` Parameters
 
-`testProp` accepts an optional `fc.Parameters` for forwarding custom parameters to `fast-check` ([more](https://github.com/dubzzz/fast-check/blob/master/documentation/Runners.md#runners)).
+`testProp` accepts an optional `fc.Parameters` for forwarding custom parameters to `fast-check` ([more](https://github.com/dubzzz/fast-check/blob/main/documentation/Runners.md#runners)).
 
 ### AVA Modifiers
 
@@ -52,10 +52,10 @@ testProp.skip('should be skipped', [fc.fullUnicodeString()], (t, text) => {
 });
 ```
 
-[`.only`]: https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#running-specific-tests
-[`.serial`]: https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#running-tests-serially
-[`.skip`]: https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#skipping-tests
-[`.failing`]: https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#failing-tests
+[`.only`]: https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#running-specific-tests
+[`.serial`]: https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#running-tests-serially
+[`.skip`]: https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#skipping-tests
+[`.failing`]: https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#failing-tests
 
 ### AVA `before`/`after` Hooks
 
@@ -77,7 +77,7 @@ testProp.after(t => {
 });
 ```
 
-[hooks]: https://github.com/avajs/ava/blob/master/docs/01-writing-tests.md#before--after-hooks
+[hooks]: https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#before--after-hooks
 
 ### AVA Execution Context
 
@@ -103,7 +103,7 @@ testProp(
 );
 ```
 
-[execution context]: https://github.com/avajs/ava/blob/master/docs/02-execution-context.md
+[execution context]: https://github.com/avajs/ava/blob/main/docs/02-execution-context.md
 
 ## Minimal requirements
 
@@ -114,6 +114,6 @@ testProp(
 | ^2.0.0         | >=3.9.0<sup>(1)</sup> | ^1.0.0               |
 | ^1.0.0         | >=0.1.0<sup>(3)</sup> | ^2.0.0               |
 
-- (1) `ava@>=3.9.0` for [`t.try`](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#trytitle-implementation--macro--macro-args) support
+- (1) `ava@>=3.9.0` for [`t.try`](https://github.com/avajs/ava/blob/main/docs/03-assertions.md#trytitle-implementation--macro--macro-args) support
 - (2) `fast-check@^2.0.0` for hybrid module support: `commonjs` and `esm` together
 - (3) `ava@>=0.1.0` for its Promise support

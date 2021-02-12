@@ -5,7 +5,7 @@
 
 Changes:
 
-- Property receives [`ava`'s `t` argument](https://github.com/avajs/ava/blob/master/docs/02-execution-context.md#execution-context-t-argument) for its first parameter
+- Property receives [`ava`'s `t` argument](https://github.com/avajs/ava/blob/main/docs/02-execution-context.md#execution-context-t-argument) for its first parameter
 
 ```diff
 --- testProp('should detect the substring', [fc.string(), fc.string(), fc.string()], (a, b, c) => {
