@@ -686,9 +686,9 @@ esutils@^2.0.3:
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
 fast-check@^2.0.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-2.14.0.tgz#13e891977a7cc1ba87aa3883c75053990c02fb21"
-  integrity sha512-4hm0ioyEVCwgjBLBqriwAFYu3/yc7pNH9fBfvzi6JRWRs4R3mwZwrr/d4MHbY0fTBJ0Uakg4TaMAAQ8Cnt2+KQ==
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-2.15.0.tgz#44c9ee0218990a509faf135bb848bc81c017c60f"
+  integrity sha512-3kCEB5TK1dR/mXqKHBH9K62EKyldwZMttPalzVYRTGEzKywRV0JFOkzsuGshCRW9IVXKi3bqxjXs+DnMcIc2wA==
   dependencies:
     pure-rand "^4.1.1"
 
