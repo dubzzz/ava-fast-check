@@ -39,7 +39,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "ava": "^3.9.0",
+    "ava": "^4.0.0",
     "esm": "^3.2.25",
     "fast-check": "^2.0.0",
     "prettier": "^2.2.1",
