@@ -1,4 +1,4 @@
-import { testProp, fc } from '../lib/ava-fast-check';
+const { testProp, fc } = require('../lib/ava-fast-check');
 
 const delay = (duration) =>
   new Promise((resolve) => {
