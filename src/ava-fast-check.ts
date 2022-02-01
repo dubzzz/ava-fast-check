@@ -50,7 +50,7 @@ function wrapProp<Context, Ts extends NonEmptyArray<any>>(
         params
       );
     } catch (error) {
-      t.log(error.message);
+      t.log((error as Error).message);
       (failingTry?.commit ?? t.fail)();
     }
 
