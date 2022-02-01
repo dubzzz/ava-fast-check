@@ -20,11 +20,12 @@ type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
 
 type AvaModifierWhitelist = 'only' | 'failing' | 'skip' | 'serial';
 
-export type PropertyTestFn<Context> = PropertyTest<Context> &
-  { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> } & {
-    before: BeforeFn<Context>;
-    after: AfterFn<Context>;
-  };
+export type PropertyTestFn<Context> = PropertyTest<Context> & {
+  [Modifier in AvaModifierWhitelist]: PropertyTest<Context>;
+} & {
+  before: BeforeFn<Context>;
+  after: AfterFn<Context>;
+};
 
 function wrapProp<Context, Ts extends NonEmptyArray<any>>(
   arbitraries: ArbitraryTuple<Ts>,
