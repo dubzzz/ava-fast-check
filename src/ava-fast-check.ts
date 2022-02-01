@@ -1,12 +1,4 @@
-import test, {
-  AfterInterface,
-  BeforeInterface,
-  ExecutionContext,
-  Implementation,
-  ImplementationResult,
-  TestInterface,
-  TryResult,
-} from 'ava';
+import test, { AfterFn, BeforeFn, ExecutionContext, Implementation, ImplementationFn, TestFn, TryResult } from 'ava';
 import * as fc from 'fast-check';
 
 export { fc, test };
@@ -17,7 +9,7 @@ type ArbitraryTuple<Ts extends NonEmptyArray<any>> = {
   [P in keyof Ts]: fc.Arbitrary<Ts[P]>;
 };
 
-type Prop<Context, Ts extends NonEmptyArray<any>> = (t: ExecutionContext<Context>, ...args: Ts) => ImplementationResult;
+type Prop<Context, Ts extends NonEmptyArray<any>> = ImplementationFn<Ts, Context>;
 
 type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
   label: string,
@@ -28,18 +20,18 @@ type PropertyTest<Context> = <Ts extends NonEmptyArray<any>>(
 
 type AvaModifierWhitelist = 'only' | 'failing' | 'skip' | 'serial';
 
-export type PropertyTestInterface<Context> = PropertyTest<Context> &
+export type PropertyTestFn<Context> = PropertyTest<Context> &
   { [Modifier in AvaModifierWhitelist]: PropertyTest<Context> } & {
-    before: BeforeInterface<Context>;
-    after: AfterInterface<Context>;
+    before: BeforeFn<Context>;
+    after: AfterFn<Context>;
   };
 
 function wrapProp<Context, Ts extends NonEmptyArray<any>>(
   arbitraries: ArbitraryTuple<Ts>,
   prop: Prop<Context, Ts>,
   params?: fc.Parameters<Ts>
-): Implementation<Context> {
-  return async (t) => {
+): Implementation<Ts, Context> {
+  return async (t, ...args) => {
     let failingTry: undefined | TryResult;
 
     try {
@@ -67,7 +59,7 @@ function wrapProp<Context, Ts extends NonEmptyArray<any>>(
 }
 
 function internalTestProp<Context, Ts extends NonEmptyArray<any>>(
-  testFn: (label: string, exec: Implementation<Context>) => void,
+  testFn: (label: string, exec: Implementation<Ts, Context>) => void,
   label: string,
   arbitraries: ArbitraryTuple<Ts>,
   prop: Prop<Context, Ts>,
@@ -79,21 +71,21 @@ function internalTestProp<Context, Ts extends NonEmptyArray<any>>(
   testFn(`${label} (with seed=${customParams.seed})`, wrapProp(arbitraries, prop, params));
 }
 
-function exposeModifier<Context, T extends Extract<keyof TestInterface, AvaModifierWhitelist>>(
+function exposeModifier<Context, T extends Extract<keyof TestFn, AvaModifierWhitelist>>(
   modifier: T
 ): PropertyTest<Context> {
   return (label, arbitraries, prop, params) =>
-    internalTestProp((test as TestInterface<Context>)[modifier], label, arbitraries, prop, params);
+    internalTestProp((test as TestFn<Context>)[modifier], label, arbitraries, prop, params);
 }
 
-export const testProp: PropertyTestInterface<unknown> = Object.assign(
+export const testProp: PropertyTestFn<unknown> = Object.assign(
   function testProp<Context, Ts extends NonEmptyArray<any>>(
     label: string,
     arbitraries: ArbitraryTuple<Ts>,
     prop: Prop<Context, Ts>,
     params?: fc.Parameters<Ts>
   ): void {
-    internalTestProp(test as TestInterface<Context>, label, arbitraries, prop, params);
+    internalTestProp(test as TestFn<Context>, label, arbitraries, prop, params);
   },
   {
     only: exposeModifier('only'),
