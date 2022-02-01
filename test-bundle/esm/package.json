@@ -8,7 +8,7 @@
     "test": "ava"
 },
   "devDependencies": {
-    "ava": "^3.10.0",
+    "ava": "^4.0.0",
     "ava-fast-check": "file:../../bundle/package",
     "fast-check": "2.0.0"
   }
