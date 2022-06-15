@@ -8,10 +8,7 @@
         "preserveConstEnums": true,
         "downlevelIteration": true,
         "module": "commonjs",
-        "target": "es3",
-        "lib": [
-            "es6"
-        ],
+        "target": "es2017",
         "outDir": "lib/"
     },
     "include": [
