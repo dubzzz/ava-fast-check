@@ -1,3 +1,7 @@
+⚠️⚠️⚠️ Project moved to https://github.com/dubzzz/fast-check/tree/main/packages/ava ⚠️⚠️⚠️
+
+---
+
 # Property based testing for AVA based on [fast-check](https://github.com/dubzzz/fast-check/)
 
 [![Build Status](https://github.com/dubzzz/ava-fast-check/workflows/Build%20Status/badge.svg?branch=main)](https://github.com/dubzzz/ava-fast-check/actions)
